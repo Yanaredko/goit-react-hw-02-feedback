@@ -18,19 +18,38 @@ class FeedbackApp extends Component {
         }));
     }
 
+    countTotalFeedback = () => {
+        const { good, neutral, bad } = this.state;
+        return good + neutral + bad;
+    }
+
+    countPositiveFeedbackPercentage = () => {
+        const { good } = this.state;
+        const total = this.countTotalFeedback();
+        if (total === 0) {
+            return 0;
+        }
+        return (good / total) * 100; 
+    }
+
     render() {
         const { good, neutral, bad } = this.state;
+        const totalFeedback = this.countTotalFeedback();
+        const positivePercentage = this.countPositiveFeedbackPercentage();
         
         return (
             <div>
-                <h1>Статистика відгуків</h1>
-                <FeedbackButton label="Добре" onClick={() => this.handleFeedback('good')} />
-                <FeedbackButton label="Нейтрально" onClick={() => this.handleFeedback('neutral')} />
-                <FeedbackButton label="Погано" onClick={() => this.handleFeedback('bad')} />
+                <h1>Please leave feedback</h1>
+                <FeedbackButton label="Good" onClick={() => this.handleFeedback('good')} />
+                <FeedbackButton label="Neutral" onClick={() => this.handleFeedback('neutral')} />
+                <FeedbackButton label="Bad" onClick={() => this.handleFeedback('bad')} />
                 <div>
-                    <p>Добре: {good}</p>
-                    <p>Нейтрально: {neutral}</p>
-                    <p>Погано: {bad}</p>
+                    <h2>Statistics</h2>
+                    <p>Good: {good}</p>
+                    <p>Neutral: {neutral}</p>
+                    <p>Bad: {bad}</p>
+                    <p>Total: {totalFeedback}</p>
+                    <p>Positive feedback: {positivePercentage.toFixed(0)}%</p>
                 </div>
             </div>
         );

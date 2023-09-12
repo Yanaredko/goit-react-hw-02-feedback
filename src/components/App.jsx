@@ -5,7 +5,7 @@ import FeedbackApp from './Feedback.jsx';
 function App() {
   return (
     <div className="App">
-      <FeedbackApp />
+      <FeedbackApp good={0} neutral={0} bad={0} />
     </div>
   );
 }
