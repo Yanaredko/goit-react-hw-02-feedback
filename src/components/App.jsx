@@ -1,13 +1,51 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../index.css';
-import FeedbackApp from './Feedback.jsx'; 
+import Statistics from './Statistics.jsx';
+import FeedbackOptions from './FeedbackOptions.jsx';
+import Section from './Section.jsx';
 
-function App() {
-  return (
-    <div className="App">
-      <FeedbackApp good={0} neutral={0} bad={0} />
-    </div>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      good: 0,
+      neutral: 0,
+      bad: 0,
+    };
+  }
+
+  handleFeedback = (type) => {
+    this.setState((prevState) => ({
+      [type]: prevState[type] + 1,
+    }));
+  };
+
+  render() {
+    const { good, neutral, bad } = this.state;
+    const totalFeedback = good + neutral + bad;
+    const positivePercentage = totalFeedback ? (good / totalFeedback) * 100 : 0;
+
+    return (
+      <div className="App">
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={{ good, neutral, bad }}
+            onLeaveFeedback={this.handleFeedback}
+          />
+        </Section>
+        <Section title="Statistics">
+          <Statistics
+            good={good}
+            neutral={neutral}
+            bad={bad}
+            total={totalFeedback}
+            positivePercentage={positivePercentage.toFixed(0)}
+          />
+        </Section>
+      </div>
+    );
+  }
 }
 
 export default App;
+
