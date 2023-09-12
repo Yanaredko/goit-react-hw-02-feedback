@@ -24,6 +24,7 @@ class App extends Component {
     const { good, neutral, bad } = this.state;
     const totalFeedback = good + neutral + bad;
     const positivePercentage = totalFeedback ? (good / totalFeedback) * 100 : 0;
+    const hasFeedback = totalFeedback > 0;
 
     return (
       <div className="App">
@@ -34,13 +35,19 @@ class App extends Component {
           />
         </Section>
         <Section title="Statistics">
-          <Statistics
-            good={good}
-            neutral={neutral}
-            bad={bad}
-            total={totalFeedback}
-            positivePercentage={positivePercentage.toFixed(0)}
-          />
+         {hasFeedback ? (
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={totalFeedback}
+              positivePercentage={positivePercentage.toFixed(0)}
+            />
+          ) : (
+            <div>
+              <p>No feedback given</p>
+            </div>
+          )}
         </Section>
       </div>
     );
