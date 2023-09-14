@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import FeedbackButton from './FeedbackButton.jsx';
 
 function FeedbackOptions({ options, onLeaveFeedback }) {
-//   const { good, neutral, bad } = options;
-
   return (
     <div>
-      <FeedbackButton label="Good" onClick={() => onLeaveFeedback('good')} />
-      <FeedbackButton label="Neutral" onClick={() => onLeaveFeedback('neutral')} />
-      <FeedbackButton label="Bad" onClick={() => onLeaveFeedback('bad')} />
+      {Object.keys(options).map(option => (
+        <FeedbackButton
+          key={option}
+          label={option}
+          onClick={() => onLeaveFeedback(option)}
+        />
+      ))}
     </div>
   );
 }
